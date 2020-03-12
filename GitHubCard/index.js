@@ -5,7 +5,7 @@
 
 axios.get('https://api.github.com/users/gabeaster')
 .then(response =>{
-  console.log(response);
+  console.log(`this is the response`, response);
 })
 
 
@@ -51,6 +51,39 @@ const followersArray = [];
 </div>
 
 */
+
+function cardMaker (paramater) {
+  //define new elements
+    const card = document.createElement('div'),
+          image = document.createElement('img'),
+          info = document.createElement('div'),
+          name = document.createElement('h3'),
+          username = document.createElement('p'),
+          location = document.createElement('p'),
+          profile = document.createElement('p'),
+          anchor = document.createElement('a'),
+          followers = document.createElement('p'),
+          following = document.createElement('p'),
+          bio = document.createElement('p');
+  //setup structure
+    card.appendChild(image);
+    card.appendChild(info);
+    info.append(name);
+    info.append(username);
+    info.append(location);
+    info.append(profile);
+    profile.append(anchor);
+    info.append(followers);
+    info.append(following);
+    info.append(bio);
+
+  //add classes to elements
+ 
+
+
+
+  return newCard;
+}
 
 /* List of LS Instructors Github username's: 
   tetondan
