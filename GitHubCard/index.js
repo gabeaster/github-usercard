@@ -3,10 +3,7 @@
            https://api.github.com/users/<your name>
 */
 
-axios.get('https://api.github.com/users/gabeaster')
-.then(response =>{
-  console.log(`this is the response`, response);
-})
+
 
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
@@ -19,6 +16,7 @@ axios.get('https://api.github.com/users/gabeaster')
 /* Step 4: Pass the data received from Github into your function, 
            create a new component and add it to the DOM as a child of .cards
 */
+
 
 /* Step 5: Now that you have your own card getting added to the DOM, either 
           follow this link in your browser https://api.github.com/users/<Your github name>/followers 
@@ -51,8 +49,17 @@ const followersArray = [];
 </div>
 
 */
+const cards = document.querySelector('.cards');
+axios.get('https://api.github.com/users/gabeaster')
+.then(response =>{
+  console.log(`this is the response`, response);
+  cards.append(cardMaker(response.data));
+})
+.catch(error => {
+  console.log('Uh-oh, Cap. We have encountered an error', error);
+});
 
-function cardMaker (paramater) {
+function cardMaker (data) {
   //define new elements
     const card = document.createElement('div'),
           image = document.createElement('img'),
@@ -78,12 +85,29 @@ function cardMaker (paramater) {
     info.append(bio);
 
   //add classes to elements
- 
-
-
-
-  return newCard;
+    card.classList.add('card');
+    info.classList.add('card-info');
+    name.classList.add('name');
+    username.classList.add('username');
+  
+  //set content
+    image.src = ('src', data.avatar_url);
+    name.textContent = data.name;
+    username.textContent = data.login;
+    location.textContent = data.location;
+    profile.textContent = 'Profile:';
+    anchor.textContent = data.url;
+    followers.textContent = data.followers;
+    following.textContent = data.following;
+    bio.textContent = data.bio;
+    
+  return card;
 }
+
+
+
+
+
 
 /* List of LS Instructors Github username's: 
   tetondan
