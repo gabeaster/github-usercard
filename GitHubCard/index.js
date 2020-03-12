@@ -28,7 +28,7 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -95,16 +95,40 @@ function cardMaker (data) {
     name.textContent = data.name;
     username.textContent = data.login;
     location.textContent = data.location;
-    profile.textContent = 'Profile:';
-    anchor.textContent = data.url;
-    followers.textContent = data.followers;
-    following.textContent = data.following;
-    bio.textContent = data.bio;
+    profile.textContent = `Profile: ${data.url}`;
+    followers.textContent = `Followers: ${data.followers}`;
+    following.textContent = `Following: ${data.following}`;
+    bio.textContent = `Bio: ${data.bio}`;
     
   return card;
 }
 
+//step 5
+const followersArray = ['leachcoding', 'mosesintech', 'jcdaly97', 'HNelson98', 'Kennethh1987'];
 
+followersArray.forEach(item => {
+  axios.get(`https://api.github.com/users/${item}`)
+  .then(response => {
+    cards.append(cardMaker(response.data));
+  })
+  .catch(error=>{
+    console.log('uh-oh, cap. we have an error', error);
+  });
+});
+
+// function axiosGet (array) {
+//   array.forEach((item) => {
+//   axios.get(`https://api.github.come/users/${item}`)
+//   .then(response => {
+//     cards.append(cardMaker(response.data));
+//   })
+//   .catch(error =>{
+//     console.log('uh-oh, cap. we have an error', error);
+//   });
+// });
+// };
+
+// axiosGet(followersArray);
 
 
 
