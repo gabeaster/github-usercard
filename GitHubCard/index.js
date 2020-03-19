@@ -3,6 +3,9 @@
            https://api.github.com/users/<your name>
 */
 
+
+
+
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -14,6 +17,7 @@
            create a new component and add it to the DOM as a child of .cards
 */
 
+
 /* Step 5: Now that you have your own card getting added to the DOM, either 
           follow this link in your browser https://api.github.com/users/<Your github name>/followers 
           , manually find some other users' github handles, or use the list found 
@@ -24,7 +28,7 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -45,6 +49,89 @@ const followersArray = [];
 </div>
 
 */
+const cards = document.querySelector('.cards');
+axios.get('https://api.github.com/users/gabeaster')
+.then(response =>{
+  console.log(`this is the response`, response);
+  cards.append(cardMaker(response.data));
+})
+.catch(error => {
+  console.log('Uh-oh, Cap. We have encountered an error', error);
+});
+
+function cardMaker (data) {
+  //define new elements
+    const card = document.createElement('div'),
+          image = document.createElement('img'),
+          info = document.createElement('div'),
+          name = document.createElement('h3'),
+          username = document.createElement('p'),
+          location = document.createElement('p'),
+          profile = document.createElement('p'),
+          anchor = document.createElement('a'),
+          followers = document.createElement('p'),
+          following = document.createElement('p'),
+          bio = document.createElement('p');
+  //setup structure
+    card.appendChild(image);
+    card.appendChild(info);
+    info.append(name);
+    info.append(username);
+    info.append(location);
+    info.append(profile);
+    profile.append(anchor);
+    info.append(followers);
+    info.append(following);
+    info.append(bio);
+
+  //add classes to elements
+    card.classList.add('card');
+    info.classList.add('card-info');
+    name.classList.add('name');
+    username.classList.add('username');
+  
+  //set content
+    image.src = ('src', data.avatar_url);
+    name.textContent = data.name;
+    username.textContent = data.login;
+    location.textContent = data.location;
+    profile.textContent = `Profile: ${data.url}`;
+    followers.textContent = `Followers: ${data.followers}`;
+    following.textContent = `Following: ${data.following}`;
+    bio.textContent = `Bio: ${data.bio}`;
+    
+  return card;
+}
+
+//step 5
+const followersArray = ['leachcoding', 'mosesintech', 'jcdaly97', 'HNelson98', 'Kennethh1987'];
+
+followersArray.forEach(item => {
+  axios.get(`https://api.github.com/users/${item}`)
+  .then(response => {
+    cards.append(cardMaker(response.data));
+  })
+  .catch(error=>{
+    console.log('uh-oh, cap. we have an error', error);
+  });
+});
+
+// function axiosGet (array) {
+//   array.forEach((item) => {
+//   axios.get(`https://api.github.come/users/${item}`)
+//   .then(response => {
+//     cards.append(cardMaker(response.data));
+//   })
+//   .catch(error =>{
+//     console.log('uh-oh, cap. we have an error', error);
+//   });
+// });
+// };
+
+// axiosGet(followersArray);
+
+
+
 
 /* List of LS Instructors Github username's: 
   tetondan
